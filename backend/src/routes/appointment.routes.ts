@@ -6,7 +6,7 @@ import { authenticate } from '../middleware/auth.middleware';
 import { authorize, isDoctorOrAdmin, isPatient } from '../middleware/role.middleware';
 import { UserRole } from '../models/User.model';
 import { AppointmentStatus, CancellationReason } from '../models/Appointment.model';
-import { createAppointmentValidation, updateAppointmentStatusValidation } from '../validators';
+import { appointmentQueryValidation, createAppointmentValidation, updateAppointmentStatusValidation } from '../validators';
 import { handleValidationErrors, objectIdValidation, paginationValidation } from '../validators/auth.validator';
 
 const router = Router();
@@ -17,7 +17,7 @@ router.post('/', isPatient, createAppointmentValidation, handleValidationErrors,
   sendCreated(res, { appointment }, 'Appointment booked successfully');
 }));
 
-router.get('/', paginationValidation, handleValidationErrors, asyncHandler(async (req: Request, res: Response) => {
+router.get('/', paginationValidation, appointmentQueryValidation, handleValidationErrors, asyncHandler(async (req: Request, res: Response) => {
   const filters = { ...req.query } as any;
   if (req.userRole === UserRole.PATIENT) filters.patient = req.userId;
   if (req.userRole === UserRole.DOCTOR) filters.doctor = req.userId;

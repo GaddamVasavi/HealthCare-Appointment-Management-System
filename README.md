@@ -34,10 +34,10 @@ Copy-Item .env.example .env
 Set `MONGODB_URI`, `JWT_SECRET`, and `JWT_REFRESH_SECRET` in `.env`. Never commit `.env` or real credentials.
 
 ## Run the backend
-
+Copy-Item example.env .env
 ```powershell
 npm run dev:backend
-```
+Remaining resource routes, database integration coverage, reporting, and complete documentation remain to be implemented. This repository does not yet satisfy the requested 50,000 meaningful LOC target.
 
 The API listens on `http://localhost:5000` by default. Health check:
 

@@ -34,6 +34,9 @@ class DoctorService {
     const query: any = {};
     const userQuery: any = { role: UserRole.DOCTOR, status: UserStatus.ACTIVE };
 
+    const activeDoctors = await User.find(userQuery).select('_id');
+    query.user = { $in: activeDoctors.map((user) => user._id) };
+
     if (filters.name) {
       const nameRegex = new RegExp(filters.name, 'i');
       const matchedUsers = await User.find({

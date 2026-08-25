@@ -21,7 +21,13 @@ export const createAppointmentValidation: ValidationChain[] = [
     .matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('Start time must be in HH:mm format'),
   body('endTime')
     .notEmpty().withMessage('End time is required')
-    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('End time must be in HH:mm format'),
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/).withMessage('End time must be in HH:mm format')
+    .custom((value, { req }) => {
+      if (typeof req.body.startTime === 'string' && value <= req.body.startTime) {
+        throw new Error('End time must be after start time');
+      }
+      return true;
+    }),
   body('reason')
     .notEmpty().withMessage('Reason for appointment is required')
     .trim()

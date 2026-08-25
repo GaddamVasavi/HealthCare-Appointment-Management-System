@@ -65,6 +65,7 @@ docker-data/
 *.pid
 *.seed
 *.pid.lock
+*.zip
 .cache/
 .parcel-cache/
 .eslintcache

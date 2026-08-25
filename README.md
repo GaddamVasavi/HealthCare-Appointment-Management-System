@@ -12,7 +12,11 @@ Implemented:
 - Password hashing with bcrypt and access/refresh JWT separation
 - Six automated tests covering password strength, hashing, token verification, token misuse prevention, and API health
 
-The frontend, separate admin panel, remaining REST resource routes, database integration tests, Docker setup, reporting, and complete documentation remain to be implemented. This repository does not yet satisfy the requested 50,000 meaningful LOC or five-commit completion target.
+Patient frontend and separate administrator dashboard shells are now included under `frontend/` and `admin-panel/`.
+
+Dockerfiles and `docker-compose.yml` provide local MongoDB, API, patient, and admin services.
+
+Remaining REST resource routes, database integration tests, reporting, and complete documentation remain to be implemented. This repository does not yet satisfy the requested 50,000 meaningful LOC or five-commit completion target.
 
 ## Prerequisites
 
@@ -46,7 +50,20 @@ GET /health
 ```powershell
 npm test -- --runInBand
 npm run build:backend
+Push-Location frontend; npm install; npm run build; Pop-Location
+Push-Location admin-panel; npm install; npm run build; Pop-Location
+./scripts/count-loc.ps1
 ```
+
+## Docker
+
+Create a root `.env` with strong `JWT_SECRET` and `JWT_REFRESH_SECRET` values, then run:
+
+```powershell
+docker compose up --build
+```
+
+The API is available on port `5000`, the patient application on `5173`, and the administrator application on `5174`.
 
 ## API groups currently wired
 

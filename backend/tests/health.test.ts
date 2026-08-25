@@ -25,4 +25,15 @@ describe('health endpoint', () => {
     expect(response.status).toBe(401);
     expect(response.body).toMatchObject({ success: false });
   });
+
+  it('rejects appointment intervals that end before they start', async () => {
+    const response = await request(app).post('/api/appointments').send({
+      doctor: '507f1f77bcf86cd799439011',
+      date: '2030-08-25',
+      startTime: '14:00',
+      endTime: '13:00',
+      reason: 'Routine consultation',
+    });
+    expect(response.status).toBe(401);
+  });
 });

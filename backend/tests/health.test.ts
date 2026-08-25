@@ -13,4 +13,16 @@ describe('health endpoint', () => {
       status: 'ok',
     });
   });
+
+  it('protects appointment resources from anonymous requests', async () => {
+    const response = await request(app).get('/api/appointments');
+    expect(response.status).toBe(401);
+    expect(response.body).toMatchObject({ success: false });
+  });
+
+  it('protects administrator reports from anonymous requests', async () => {
+    const response = await request(app).get('/api/admin/reports/overview');
+    expect(response.status).toBe(401);
+    expect(response.body).toMatchObject({ success: false });
+  });
 });

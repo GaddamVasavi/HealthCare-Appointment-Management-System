@@ -14,6 +14,7 @@ import ehrRoutes from './ehr.routes';
 import labRoutes from './lab.routes';
 import prescriptionRoutes from './prescription.routes';
 import analyticsRoutes from './analytics.routes';
+import clinicalOperationsRoutes from './clinical-operations.routes';
 
 const router = Router();
 
@@ -36,5 +37,6 @@ router.use('/ehr', ehrRoutes);
 router.use('/lab', labRoutes);
 router.use('/prescriptions', prescriptionRoutes);
 router.use('/analytics', analyticsRoutes);
+router.use('/clinical-operations', clinicalOperationsRoutes);
 
 export default router;

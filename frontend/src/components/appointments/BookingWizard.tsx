@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Card from '../common/Card';
 import { Button } from '../common/Button';
-import { Input } from '../common/Input';
-import { Tabs } from '../common/Tabs';
+import Input from '../common/Input';
 
 interface Doctor {
   id: string;

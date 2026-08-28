@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Card from '../common/Card';
-import { Button } from '../common/Button';
-import { Input } from '../common/Input';
-import { useAuth } from '../../context/AuthContext';
-import { useForm } from '../../hooks/useForm';
+import Card from '../components/common/Card';
+import { Button } from '../components/common/Button';
+import { Input } from '../components/common/Input';
+import { useAuth } from '../context/AuthContext';
+import { useForm } from '../hooks/useForm';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterPage: React.FC = () => {
   const [step, setStep] = useState(1);
-  const { register } = useAuth(); // Assume register is implemented in useAuth
+  useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 

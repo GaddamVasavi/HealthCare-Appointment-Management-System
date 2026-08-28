@@ -1,4 +1,5 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react';
+import React, { forwardRef } from 'react';
+import type { InputHTMLAttributes } from 'react';
 import '../styles/Input.css';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -9,6 +10,8 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   rightIcon?: React.ReactNode;
   fullWidth?: boolean;
 }
+
+export { Input as Input };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,

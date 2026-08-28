@@ -1,7 +1,8 @@
 import React from 'react';
 import Card from '../common/Card';
 import { Button } from '../common/Button';
-import { Appointment, AppointmentStatus } from '../../types';
+import { AppointmentStatus } from '../../types';
+import type { Appointment } from '../../types';
 
 interface AppointmentCardProps {
   appointment: Appointment;

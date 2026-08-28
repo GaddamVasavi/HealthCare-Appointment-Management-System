@@ -57,8 +57,8 @@ export function DataTable<T>({
         }
         
         // Handle number/boolean comparison
-        if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
-        if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+        if (aValue != null && bValue != null && aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+        if (aValue != null && bValue != null && aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
         
         return 0;
       });

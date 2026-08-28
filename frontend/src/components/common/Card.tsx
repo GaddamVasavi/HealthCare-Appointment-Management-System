@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import type { ReactNode } from 'react';
 import '../styles/Card.css';
 
 interface CardProps {
@@ -9,6 +10,7 @@ interface CardProps {
   className?: string;
   variant?: 'default' | 'elevated' | 'outlined';
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 const Card: React.FC<CardProps> = ({

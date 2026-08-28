@@ -59,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({
         aria-modal="true"
         aria-labelledby={title ? "modal-title" : undefined}
       >
-        {(title || onClose) && (
+        {title && (
           <div className="modal-header">
             {title && <h2 id="modal-title" className="modal-title">{title}</h2>}
             <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
@@ -87,3 +87,5 @@ const Modal: React.FC<ModalProps> = ({
 };
 
 export default Modal;
+
+export { Modal };

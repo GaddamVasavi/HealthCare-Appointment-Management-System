@@ -36,7 +36,7 @@ const PatientConsultation: React.FC = () => {
 
       <div style={{ padding: '2rem' }}>
         <Tabs 
-          activeTab={activeTab}
+          defaultTabId={activeTab}
           onChange={setActiveTab}
           tabs={[
             {

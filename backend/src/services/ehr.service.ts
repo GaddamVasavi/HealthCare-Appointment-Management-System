@@ -14,6 +14,7 @@ import { NotFoundError, BadRequestError, ForbiddenError, ConflictError } from '.
 interface MedicalRecord {
   recordId: string;
   patientId: string;
+    doctorId?: string;
   recordType: string;
   date: Date;
   content: string;
@@ -147,7 +148,7 @@ export class EHRService {
                 icd10Codes: data.icd10Codes || [],
                 cptCodes: data.cptCodes || [],
                 metadata: data.metadata || {},
-                status: 'FINALIZED',
+                status: 'finalized',
                 version: 1,
                 createdAt: new Date(),
                 updatedAt: new Date(),
@@ -196,7 +197,7 @@ export class EHRService {
                     department: 'Emergency Medicine',
                     attachments: [],
                     icd10Codes: ['R51.9'],
-                    status: 'FINALIZED',
+                    status: 'finalized',
                     version: 1,
                     createdAt: new Date(),
                     updatedAt: new Date()
@@ -211,7 +212,7 @@ export class EHRService {
                     department: 'Cardiology',
                     attachments: [],
                     icd10Codes: ['I10'],
-                    status: 'FINALIZED',
+                    status: 'finalized',
                     version: 2,
                     createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
                     updatedAt: new Date()
@@ -227,7 +228,7 @@ export class EHRService {
                     attachments: ['ref-001'],
                     icd10Codes: ['I10'],
                     cptCodes: ['99213'],
-                    status: 'FINALIZED',
+                    status: 'finalized',
                     version: 1,
                     createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
                     updatedAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000)
@@ -286,7 +287,7 @@ export class EHRService {
                 content: data.notes || data.content,
                 clinician: data.clinician,
                 department: data.department,
-                status: data.status || 'FINALIZED',
+                status: data.status || 'finalized',
                 attachments: data.attachmentIds || [],
                 version: (data.version || 1) + 1,
                 createdAt: data.createdAt || new Date(),
@@ -828,8 +829,6 @@ export class EHRService {
             throw error;
         }
     }
-}
-
     /**
      * Record clinical vitals and calculate abnormalities
      */

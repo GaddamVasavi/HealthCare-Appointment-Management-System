@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { NotificationService } from '../services/notification.service';
 
-interface AuthReq extends Request { user?: { id: string; role: string } }
+type AuthReq = Request;
 
 export class NotificationController {
     private service = new NotificationService();

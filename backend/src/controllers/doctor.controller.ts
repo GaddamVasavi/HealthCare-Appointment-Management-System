@@ -16,7 +16,7 @@ export class DoctorController {
      */
     public getProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const profile = await this.doctorService.getProfile(doctorId);
             res.status(200).json({ success: true, data: profile });
         } catch (error) {
@@ -29,7 +29,7 @@ export class DoctorController {
      */
     public updateProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const updateData = req.body;
             const profile = await this.doctorService.updateProfile(doctorId, updateData);
             res.status(200).json({ success: true, data: profile, message: 'Profile updated' });
@@ -43,7 +43,7 @@ export class DoctorController {
      */
     public getSchedule = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const schedule = await this.doctorService.getSchedule(doctorId);
             res.status(200).json({ success: true, data: schedule });
         } catch (error) {
@@ -56,7 +56,7 @@ export class DoctorController {
      */
     public setAvailability = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const availabilityData = req.body;
             const availability = await this.doctorService.setAvailability(doctorId, availabilityData);
             res.status(200).json({ success: true, data: availability });
@@ -70,7 +70,7 @@ export class DoctorController {
      */
     public getPatientList = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const patients = await this.doctorService.getPatientList(doctorId);
             res.status(200).json({ success: true, data: patients });
         } catch (error) {
@@ -83,7 +83,7 @@ export class DoctorController {
      */
     public getTodayAppointments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const appointments = await this.doctorService.getTodayAppointments(doctorId);
             res.status(200).json({ success: true, data: appointments });
         } catch (error) {
@@ -96,7 +96,7 @@ export class DoctorController {
      */
     public getDashboardStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const stats = await this.doctorService.getDashboardStats(doctorId);
             res.status(200).json({ success: true, data: stats });
         } catch (error) {
@@ -109,7 +109,7 @@ export class DoctorController {
      */
     public updateConsultationFee = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const { fee } = req.body;
             const updated = await this.doctorService.updateConsultationFee(doctorId, fee);
             res.status(200).json({ success: true, data: updated });
@@ -123,7 +123,7 @@ export class DoctorController {
      */
     public getReviews = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const doctorId = req.user?.id;
+            const doctorId = req.userId;
             const reviews = await this.doctorService.getReviews(doctorId);
             res.status(200).json({ success: true, data: reviews });
         } catch (error) {

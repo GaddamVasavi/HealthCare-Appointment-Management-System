@@ -6,7 +6,7 @@
  */
 
 import crypto from 'crypto';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { logger } from './logger';
 import { BadRequestError, UnauthorizedError } from './errors';
@@ -86,7 +86,7 @@ export class SecurityUtility {
         throw new BadRequestError('JWT secret is required');
       }
 
-      const token = jwt.sign(payload, secret, { expiresIn });
+      const token = jwt.sign(payload, secret, { expiresIn: expiresIn as any });
       logger.info(`JWT token generated for user: ${payload.userId}`);
       return token;
     } catch (error) {
@@ -278,7 +278,7 @@ export class SecurityUtility {
       const refreshToken = jwt.sign(
         { userId, type: 'refresh' },
         secret,
-        { expiresIn }
+        { expiresIn: expiresIn as any }
       );
 
       logger.info(`Refresh token generated for user: ${userId}`);
@@ -403,7 +403,7 @@ export class SecurityUtility {
       const token = jwt.sign(
         { userId, type: 'password_reset' },
         secret,
-        { expiresIn }
+        { expiresIn: expiresIn as any }
       );
 
       logger.info(`Password reset token generated for user: ${userId}`);
@@ -422,7 +422,7 @@ export class SecurityUtility {
       const token = jwt.sign(
         { email, type: 'email_verification' },
         secret,
-        { expiresIn }
+        { expiresIn: expiresIn as any }
       );
 
       logger.info(`Email verification token generated for email: ${email}`);

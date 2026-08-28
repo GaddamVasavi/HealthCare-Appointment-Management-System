@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { PrescriptionService } from '../services/prescription.service';
 
-interface AuthReq extends Request { user?: { id: string; role: string } }
+type AuthReq = Request;
 
 export class PrescriptionController {
     private service = new PrescriptionService();

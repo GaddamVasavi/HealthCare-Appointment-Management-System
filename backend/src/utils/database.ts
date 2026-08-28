@@ -6,7 +6,7 @@
  * performance optimization functions.
  */
 
-import mongoose, { Connection, Session } from 'mongoose';
+import mongoose, { ClientSession, Connection } from 'mongoose';
 import { logger } from './logger';
 import { BadRequestError } from './errors';
 
@@ -34,7 +34,7 @@ export interface QueryOptions {
 export class DatabaseUtility {
   private static instance: DatabaseUtility;
   private connection: Connection | null = null;
-  private sessions: Map<string, Session> = new Map();
+  private sessions: Map<string, ClientSession> = new Map();
   private queryCache: Map<string, { data: any; timestamp: number }> = new Map();
   private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
@@ -64,12 +64,10 @@ export class DatabaseUtility {
         serverSelectionTimeoutMS: config.serverSelectionTimeoutMS || 5000,
         socketTimeoutMS: config.socketTimeoutMS || 45000,
         retryWrites: config.retryWrites !== false,
-        readPreference: config.readPreference || 'primary',
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        readPreference: config.readPreference || 'primary'
       };
 
-      this.connection = await mongoose.createConnection(config.uri, options);
+      this.connection = await mongoose.createConnection(config.uri, options as any);
 
       this.connection.on('connected', () => {
         logger.info('Database connection established');
@@ -93,7 +91,7 @@ export class DatabaseUtility {
   /**
    * Start a database session for transactions
    */
-  async startSession(): Promise<Session> {
+  async startSession(): Promise<ClientSession> {
     try {
       if (!this.connection) {
         throw new Error('Database connection not initialized');
@@ -386,7 +384,7 @@ export class DatabaseUtility {
         return false;
       }
 
-      const healthCheck = await this.connection.db.admin().ping();
+      await this.connection.db?.admin().ping();
       logger.info('Database connection health check passed');
       return true;
     } catch (error) {

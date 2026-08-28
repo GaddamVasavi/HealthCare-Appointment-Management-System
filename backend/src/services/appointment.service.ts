@@ -32,7 +32,7 @@ export interface AppointmentFilter {
   sortOrder?: 'asc' | 'desc';
 }
 
-class AppointmentService {
+export class AppointmentService {
   async bookAppointment(patientId: string, input: BookAppointmentInput): Promise<IAppointment> {
     const doctor = await Doctor.findOne({ user: input.doctor }).populate('user', 'firstName lastName email');
     if (!doctor) {
@@ -600,6 +600,23 @@ class AppointmentService {
 
     return result;
   }
+
+  async createAppointment(data: any): Promise<any> { return this.bookAppointment(data.patientId, data); }
+  async getById(id: string): Promise<any> { return this.getAppointment(id, '', 'admin'); }
+  async update(id: string, data: any): Promise<any> { return Appointment.findByIdAndUpdate(id, data, { new: true, runValidators: true }); }
+  async cancel(id: string): Promise<any> { return this.updateAppointmentStatus(id, AppointmentStatus.CANCELLED, '', 'admin'); }
+  async reschedule(id: string, newDate: string, newSlotId: string): Promise<any> {
+    return this.rescheduleAppointment(id, '', 'admin', newDate, newSlotId, newSlotId, 'Rescheduled');
+  }
+  async checkIn(id: string): Promise<any> { return this.updateAppointmentStatus(id, AppointmentStatus.IN_PROGRESS, '', 'admin'); }
+  async complete(id: string): Promise<any> { return this.updateAppointmentStatus(id, AppointmentStatus.COMPLETED, '', 'admin'); }
+  async addNotes(id: string, notes: string): Promise<any> { return this.update(id, { doctorNotes: notes }); }
+  async addFollowUp(id: string, data: any): Promise<any> { return this.update(id, { followUp: data }); }
+  async getByDateRange(startDate: string, endDate: string): Promise<any> {
+    return this.getAppointments({ startDate, endDate });
+  }
+  async getByDoctor(doctorId: string): Promise<any> { return this.getDoctorAppointments(doctorId, {}); }
+  async getByPatient(patientId: string): Promise<any> { return this.getPatientAppointments(patientId, {}); }
 
   private generateTimeSlots(
     startTime: string,

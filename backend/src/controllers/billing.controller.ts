@@ -4,12 +4,7 @@ import { BillingService } from '../services/billing.service';
 /**
  * Interface for custom request containing user info
  */
-interface AuthenticatedRequest extends Request {
-    user?: {
-        id: string;
-        role: string;
-    };
-}
+type AuthenticatedRequest = Request;
 
 /**
  * Controller for handling all billing and financial operations.

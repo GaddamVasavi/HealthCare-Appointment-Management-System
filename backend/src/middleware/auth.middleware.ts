@@ -69,6 +69,8 @@ export const authenticate = async (
   }
 };
 
+export const authMiddleware = authenticate;
+
 export const optionalAuth = async (
   req: Request,
   _res: Response,

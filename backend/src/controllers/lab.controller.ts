@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { LabService } from '../services/lab.service';
 
-interface AuthReq extends Request { user?: { id: string; role: string } }
+type AuthReq = Request;
 
 export class LabController {
     private service = new LabService();

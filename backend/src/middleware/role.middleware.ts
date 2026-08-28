@@ -51,4 +51,6 @@ export const isPatientOrAdmin = authorize(UserRole.PATIENT, UserRole.ADMIN);
 export const isDoctorOrPatient = authorize(UserRole.DOCTOR, UserRole.PATIENT);
 export const isAnyRole = authorize(UserRole.PATIENT, UserRole.DOCTOR, UserRole.ADMIN);
 
+export const roleMiddleware = (roles: string[]) => authorize(...(roles as UserRole[]));
+
 export default authorize;

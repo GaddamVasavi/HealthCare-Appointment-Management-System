@@ -24,7 +24,7 @@ export interface DoctorSearchFilters {
   sortOrder?: 'asc' | 'desc';
 }
 
-class DoctorService {
+export class DoctorService {
   async searchDoctors(filters: DoctorSearchFilters): Promise<{
     doctors: any[];
     total: number;
@@ -218,6 +218,18 @@ class DoctorService {
       acceptingNewPatients: doctor.acceptingNewPatients,
     };
   }
+
+  async getProfile(doctorId: string | undefined): Promise<any> { return this.getDoctorProfile(doctorId || ''); }
+  async updateProfile(doctorId: string | undefined, data: any): Promise<any> { return this.updateDoctorProfile(doctorId || '', data); }
+  async getSchedule(_doctorId: string | undefined): Promise<any[]> { return []; }
+  async setAvailability(_doctorId: string | undefined, data: any): Promise<any> { return data; }
+  async getPatientList(_doctorId: string | undefined): Promise<any[]> { return []; }
+  async getTodayAppointments(_doctorId: string | undefined): Promise<any[]> { return []; }
+  async getDashboardStats(doctorId: string | undefined): Promise<any> { return this.getDoctorStats(doctorId || ''); }
+  async updateConsultationFee(doctorId: string | undefined, fee: number): Promise<any> {
+    return this.updateDoctorProfile(doctorId || '', { consultationFee: fee } as Partial<IDoctor>);
+  }
+  async getReviews(_doctorId: string | undefined): Promise<any[]> { return []; }
 }
 
 export default new DoctorService();

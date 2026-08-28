@@ -26,7 +26,7 @@ interface AuditLog {
   relatedLogs?: string[];
 }
 
-interface AuditLog Entry {
+interface AuditLogEntry {
   category: string;
   severity: 'low' | 'medium' | 'high' | 'critical';
   description: string;

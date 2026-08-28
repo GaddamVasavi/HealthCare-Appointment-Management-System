@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { EHRService } from '../services/ehr.service';
 
-interface AuthenticatedRequest extends Request {
-    user?: { id: string; role: string; };
-}
+type AuthenticatedRequest = Request;
 
 /**
  * Controller for Electronic Health Records (EHR).

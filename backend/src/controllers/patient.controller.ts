@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { PatientService } from '../services/patient.service';
+import patientRecordService from '../services/patient-record.service';
 
 /**
  * Controller for handling all patient-related operations.
@@ -8,7 +9,7 @@ export class PatientController {
     private patientService: PatientService;
 
     constructor() {
-        this.patientService = new PatientService();
+        this.patientService = patientRecordService as unknown as PatientService;
     }
 
     /**
@@ -16,7 +17,7 @@ export class PatientController {
      */
     public getProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
+            const patientId = req.userId;
             if (!patientId) {
                 res.status(401).json({ success: false, message: 'Unauthorized' });
                 return;
@@ -34,7 +35,7 @@ export class PatientController {
      */
     public updateProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
+            const patientId = req.userId;
             if (!patientId) {
                 res.status(401).json({ success: false, message: 'Unauthorized' });
                 return;
@@ -53,8 +54,8 @@ export class PatientController {
      */
     public getMyAppointments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
-            const appointments = await this.patientService.getAppointments(patientId);
+            const patientId = req.userId;
+            const appointments = await this.patientService.getAppointments(patientId!);
             res.status(200).json({ success: true, data: appointments });
         } catch (error) {
             next(error);
@@ -66,8 +67,8 @@ export class PatientController {
      */
     public getMedicalHistory = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
-            const history = await this.patientService.getMedicalHistory(patientId);
+            const patientId = req.userId;
+            const history = await this.patientService.getMedicalHistory(patientId!);
             res.status(200).json({ success: true, data: history });
         } catch (error) {
             next(error);
@@ -79,8 +80,8 @@ export class PatientController {
      */
     public getLabResults = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
-            const results = await this.patientService.getLabResults(patientId);
+            const patientId = req.userId;
+            const results = await this.patientService.getLabResults(patientId!);
             res.status(200).json({ success: true, data: results });
         } catch (error) {
             next(error);
@@ -92,8 +93,8 @@ export class PatientController {
      */
     public getPrescriptions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
-            const prescriptions = await this.patientService.getPrescriptions(patientId);
+            const patientId = req.userId;
+            const prescriptions = await this.patientService.getPrescriptions(patientId!);
             res.status(200).json({ success: true, data: prescriptions });
         } catch (error) {
             next(error);
@@ -105,9 +106,9 @@ export class PatientController {
      */
     public updateInsurance = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
+            const patientId = req.userId;
             const insuranceData = req.body;
-            const updatedInsurance = await this.patientService.updateInsurance(patientId, insuranceData);
+            const updatedInsurance = await this.patientService.updateInsurance(patientId!, insuranceData);
             res.status(200).json({ success: true, data: updatedInsurance });
         } catch (error) {
             next(error);
@@ -132,8 +133,8 @@ export class PatientController {
      */
     public getVitals = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
-            const vitals = await this.patientService.getVitals(patientId);
+            const patientId = req.userId;
+            const vitals = await this.patientService.getVitals(patientId!);
             res.status(200).json({ success: true, data: vitals });
         } catch (error) {
             next(error);
@@ -145,8 +146,8 @@ export class PatientController {
      */
     public getDashboardStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const patientId = req.user?.id;
-            const stats = await this.patientService.getDashboardStats(patientId);
+            const patientId = req.userId;
+            const stats = await this.patientService.getDashboardStats(patientId!);
             res.status(200).json({ success: true, data: stats });
         } catch (error) {
             next(error);

@@ -2,22 +2,24 @@ import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { roleMiddleware } from '../middleware/role.middleware';
 import { cacheMiddleware } from '../middleware/cache.middleware';
+import { DepartmentController } from '../controllers/department.controller';
 
 const router = Router();
+const controller = new DepartmentController();
 
 // Protect all routes
 router.use(authMiddleware);
 
 // Public/All staff routes
-router.get('/', cacheMiddleware(3600), (req, res) => res.send('Get all departments'));
-router.get('/:id', cacheMiddleware(3600), (req, res) => res.send('Get department by ID'));
-router.get('/:id/doctors', cacheMiddleware(3600), (req, res) => res.send('Get doctors in department'));
+router.get('/', cacheMiddleware(3600), controller.getAll);
+router.get('/:id', cacheMiddleware(3600), controller.getById);
+router.get('/:id/doctors', cacheMiddleware(3600), controller.getDoctors);
 
 // Admin only routes
-router.post('/', roleMiddleware(['admin']), (req, res) => res.send('Create department'));
-router.put('/:id', roleMiddleware(['admin']), (req, res) => res.send('Update department'));
-router.delete('/:id', roleMiddleware(['admin']), (req, res) => res.send('Delete department'));
-router.post('/:id/doctors', roleMiddleware(['admin']), (req, res) => res.send('Assign doctor to department'));
-router.delete('/:id/doctors/:doctorId', roleMiddleware(['admin']), (req, res) => res.send('Remove doctor from department'));
+router.post('/', roleMiddleware(['admin']), controller.create);
+router.put('/:id', roleMiddleware(['admin']), controller.update);
+router.delete('/:id', roleMiddleware(['admin']), controller.delete);
+router.post('/:id/doctors', roleMiddleware(['admin']), controller.assignDoctor);
+router.delete('/:id/doctors/:doctorId', roleMiddleware(['admin']), controller.removeDoctor);
 
 export default router;

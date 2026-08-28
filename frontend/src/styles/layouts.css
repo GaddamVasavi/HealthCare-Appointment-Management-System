@@ -1,0 +1,109 @@
+/* App Shell */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.app-sidebar {
+  width: 250px;
+  background-color: white;
+  border-right: 1px solid var(--slate-200);
+  display: flex;
+  flex-direction: column;
+  transition: width var(--transition-normal);
+  z-index: var(--z-fixed);
+}
+
+.app-sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4) 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  color: var(--slate-600);
+  text-decoration: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.nav-item:hover, .nav-item.active {
+  background-color: var(--primary-50);
+  color: var(--primary-600);
+  border-right: 3px solid var(--primary-600);
+}
+
+.nav-item i {
+  margin-right: var(--space-3);
+  font-size: 1.25rem;
+}
+
+.app-sidebar.collapsed .nav-item span {
+  display: none;
+}
+
+/* Main Content Area */
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+.app-header {
+  height: 64px;
+  background-color: white;
+  border-bottom: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  z-index: var(--z-sticky);
+}
+
+/* Content Area */
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  background-color: var(--slate-50);
+}
+
+/* Auth Layout */
+.auth-layout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--slate-50);
+  padding: var(--space-4);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Grid Layouts */
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-4); }

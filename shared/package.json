@@ -1,0 +1,12 @@
+{
+  "name": "@healthcare/shared",
+  "version": "1.0.0",
+  "description": "Shared library for Healthcare Appointment Management System",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

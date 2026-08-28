@@ -1,0 +1,136 @@
+.datatable-container {
+  width: 100%;
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.datatable-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.datatable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.datatable-th {
+  padding: 1rem 1.5rem;
+  background-color: var(--background-color);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.datatable-th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.datatable-th.sortable:hover {
+  color: var(--text-primary);
+  background-color: rgba(0,0,0,0.02);
+}
+
+.th-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sort-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.datatable-td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  vertical-align: middle;
+}
+
+.datatable-row {
+  transition: background-color var(--transition-speed);
+}
+
+.datatable-row:hover {
+  background-color: var(--background-color);
+}
+
+.datatable-row.selected {
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.datatable-row.clickable {
+  cursor: pointer;
+}
+
+.datatable-checkbox-col {
+  width: 48px;
+  padding-right: 0.5rem;
+}
+
+.datatable-empty, .datatable-loading {
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.datatable-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-speed);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: var(--background-color);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-current {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}

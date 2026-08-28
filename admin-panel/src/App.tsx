@@ -1,14 +1,99 @@
-import { useState } from 'react'
-import './App.css'
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate, NavLink, Outlet } from 'react-router-dom';
+import { AuthProvider, useAuthContext } from './context/AuthContext';
+import './App.css';
+
+import { AdminSidebar } from './components/common/AdminSidebar';
+import { AdminHeader } from './components/common/AdminHeader';
+
+
+
+const AdminLayout = () => {
+  const { isAuthenticated } = useAuthContext();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return (
+    <div className="admin-layout">
+      <AdminSidebar />
+      <div className="admin-main">
+        <AdminHeader />
+        <main className="admin-content">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+// Pages
+const LoginPage = () => {
+  const { login } = useAuthContext();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    login('fake-token', { name: 'Admin', role: 'SUPER_ADMIN' });
+  };
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Admin Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input className="form-control" type="email" required />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input className="form-control" type="password" required />
+          </div>
+          <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Login</button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+import { AdminDashboard } from './pages/AdminDashboard';
+import { UserManagement } from './pages/UserManagement';
+import { DoctorManagement } from './pages/DoctorManagement';
+import { AppointmentManagement } from './pages/AppointmentManagement';
+import { PatientManagement } from './pages/PatientManagement';
+import { DepartmentManagement } from './pages/DepartmentManagement';
+import { ReportsAnalytics } from './pages/ReportsAnalytics';
+import { AuditLogs } from './pages/AuditLogs';
+import { SystemSettings } from './pages/SystemSettings';
+
+const DashboardPage = () => <AdminDashboard />;
+const UsersPage = () => <UserManagement />;
+const DoctorsPage = () => <DoctorManagement />;
+const AppointmentsPage = () => <AppointmentManagement />;
+const PatientsPage = () => <PatientManagement />;
+const DepartmentsPage = () => <DepartmentManagement />;
+const AnalyticsPage = () => <ReportsAnalytics />;
+const AuditPage = () => <AuditLogs />;
+const SettingsPage = () => <SystemSettings />;
+
 
 function App() {
-  const [active, setActive] = useState('Overview')
-  const navItems = ['Overview', 'Appointments', 'Patients', 'Doctors', 'Reports']
-  const appointments = [['09:00', 'Dr. Anika Rao', 'Cardiology', 'Ava Thompson', 'Confirmed'], ['10:30', 'Dr. Michael Chen', 'Dermatology', 'Liam Walker', 'Pending'], ['11:15', 'Dr. Sofia Patel', 'General care', 'Noah Williams', 'Confirmed'], ['13:00', 'Dr. James Wilson', 'Neurology', 'Mia Anderson', 'Completed']]
-
   return (
-    <div className="admin-shell"><aside><div className="brand"><span>✚</span>MediCare <i>Connect</i></div><p className="workspace">OPERATIONS CONSOLE</p><nav>{navItems.map((item) => <button className={active === item ? 'active' : ''} onClick={() => setActive(item)} key={item}><span>{['⌂','◷','♙','✚','▥'][navItems.indexOf(item)]}</span>{item}{item === 'Appointments' && <b>12</b>}</button>)}</nav><div className="admin-profile"><div>AM</div><p><strong>Alex Morgan</strong><small>Administrator</small></p><span>⌄</span></div></aside><main><header><div><p className="eyebrow">Tuesday, August 25, 2026</p><h1>{active}</h1></div><div className="header-actions"><button>⌕</button><button>♢<i /></button><div className="mini-avatar">AM</div></div></header><section className="overview-intro"><div><p className="eyebrow">PLATFORM PULSE</p><h2>Good morning, Alex.</h2><p>Here is what is happening across your care network today.</p></div><button className="export">Export report <span>↓</span></button></section><section className="metrics"><article><span className="metric-icon mint">♙</span><p>Total patients</p><strong>12,480</strong><small className="up">↑ 8.4% <em>vs last month</em></small></article><article><span className="metric-icon peach">✚</span><p>Active doctors</p><strong>384</strong><small className="up">↑ 12 new <em>this month</em></small></article><article><span className="metric-icon lavender">◷</span><p>Appointments today</p><strong>146</strong><small className="neutral">18 awaiting confirmation</small></article><article><span className="metric-icon yellow">↗</span><p>Completion rate</p><strong>94.2%</strong><small className="up">↑ 2.1% <em>vs last month</em></small></article></section><section className="lower-grid"><div className="table-panel"><div className="panel-heading"><div><p className="eyebrow">LIVE QUEUE</p><h2>Today's appointments</h2></div><button className="view-all">View schedule →</button></div><div className="table-head"><span>TIME</span><span>DOCTOR</span><span>PATIENT</span><span>STATUS</span></div>{appointments.map(([time, doctor, specialty, patient, status]) => <div className="table-row" key={time}><time>{time}</time><div><strong>{doctor}</strong><small>{specialty}</small></div><span>{patient}</span><b className={`pill ${status.toLowerCase()}`}>{status}</b></div>)}</div><div className="activity-panel"><div className="panel-heading"><div><p className="eyebrow">SYSTEM FEED</p><h2>Recent activity</h2></div><button className="dots">•••</button></div><div className="activity"><span className="activity-dot green"/><p><strong>New doctor approved</strong><small>Dr. Elena Garcia · 8 min ago</small></p></div><div className="activity"><span className="activity-dot orange"/><p><strong>Profile requires review</strong><small>Dr. David Kim · 24 min ago</small></p></div><div className="activity"><span className="activity-dot blue"/><p><strong>System report generated</strong><small>Monthly operations · 1 hr ago</small></p></div></div></section></main></div>
-  )
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<AdminLayout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="doctors" element={<DoctorsPage />} />
+            <Route path="patients" element={<PatientsPage />} />
+            <Route path="departments" element={<DepartmentsPage />} />
+            <Route path="appointments" element={<AppointmentsPage />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="audit" element={<AuditPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;

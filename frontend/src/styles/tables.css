@@ -1,0 +1,110 @@
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--slate-200);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th, .table td {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.table th {
+  background-color: var(--slate-50);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-500);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.table tbody tr:hover {
+  background-color: var(--slate-50);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Density Variants */
+.table-compact th, .table-compact td {
+  padding: var(--space-2) var(--space-3);
+}
+
+.table-spacious th, .table-spacious td {
+  padding: var(--space-6) var(--space-8);
+}
+
+/* Actions Column */
+.table .actions {
+  text-align: right;
+  white-space: nowrap;
+}
+.table .actions .btn {
+  margin-left: var(--space-2);
+}
+
+/* Sortable Headers */
+.th-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+.th-sortable:hover {
+  color: var(--slate-700);
+  background-color: var(--slate-100);
+}
+.sort-icon {
+  display: inline-block;
+  margin-left: var(--space-1);
+  opacity: 0.5;
+}
+.th-sortable.sorted .sort-icon {
+  opacity: 1;
+  color: var(--primary-600);
+}
+
+/* Pagination Footer */
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--slate-200);
+  background-color: white;
+}
+.page-info {
+  font-size: var(--text-sm);
+  color: var(--slate-500);
+}
+.page-controls {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Empty State */
+.table-empty {
+  padding: var(--space-12);
+  text-align: center;
+  color: var(--slate-500);
+}
+.table-empty-icon {
+  font-size: 3rem;
+  color: var(--slate-300);
+  margin-bottom: var(--space-4);
+}

@@ -7,3 +7,6 @@ export * from './appointment.types';
 export * from './medical.types';
 export * from './billing.types';
 export * from './common.types';
+export * from './clinical.types';
+export * from './telehealth.types';
+export * from './quality.types';
